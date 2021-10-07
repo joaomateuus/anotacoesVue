@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiros passos em vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+</head>
+<body>
+<!---Diretivas no vue
+
+Definição de diretivas: conjunto de indicações gerais, normas, instruções,
+consoantes as quais alguem deve obedecer.
+
+**Passando esse conceito para persepectivas do vue, as diretivas são uma forma
+de conseguirmos interagir com o html que não é uma linguagem de programação, pass
+ando comandos e tarefas**
+
+Alguns exemplos de diretivas: v-model, v-if, v-for e podemos até mesmo criar nossa 
+própia diretiva.
+------>
+
+<!--- DIRETIVA V-IF/ELSE
+v-if: estrutura condicional, caso a condição seja verdadeira irá ser executada, se n 
+vai para a proxima
+-->
+<div id="app">
+    <h1 v-if="status">{{ titulo }}</h1>
+    <div v-else> Usando diretivas no vuejs   </div>         
+</div>
+
+<script>
+var app = new Vue({
+    el:"#app",
+    data: {
+        status: false,           //Variavel status que valida a estrutura condicional if/else
+        titulo: "vue js"        //Variavel titulo, uma string que interpolamos na div do h1
+    }
+});
+</script>
+
+<!--DIRETIVA V-FOR 
+A diretiva v-for é bem semelhante com qualquer outra declaração de loop de qualquer linguagem de programação.
+De uma forma geral, algo vai percorrer entre o seus dados, que geralmente é um array. E durante esse loop você
+pode apresentar o que for necessário para seu usuário.
+exemplo:
+-->
+
+<!---Então agora vamos criar uma lista no html e imprimir o nome de cada linguagem de uma só vez usando o v-for.-->
+<div id="app1">
+    <ul>                                        <!----Perceba que usamos o v-for no li e criamos uma variável interna chamada item, Mas porque?-->
+        <li v-for="item in linguagens">         <!--Por que essa variável só vai funcionar dentro desse loop, ou seja, dentro e especificamente do li.-->
+            {{ item.nome }}                     <!--E para imprimir o objeto completo basta chamar o campo nome-->
+        </li>                    
+    </ul>
+</div>
+
+
+
+<script>
+    //O primeiro passo é criar uma variável (array de objetos) dentro da data.
+    //Nesse caso ela se chama linguagens e traz consigo cinco itens como no código abaixo
+
+    var app = new Vue({
+        el:"#app1",
+        data: {
+            linguagens: [
+            { nome: 'Javascript' },
+            { nome: 'PHP' },
+            { nome: 'C#' },
+            { nome: 'Java' },
+            { nome: 'Python' },
+            ],
+        }
+    });
+    </script>
+
+<!---DIRETIVA V-MODEL
+v-model é uma diretiva que você vai usar muito em formulários, dentro do input, textarea, checkbox, radio button, entre outros. Na prática, é bem simples.
+exemplo teorico:
+-->
+
+<div id="app2"> <!--eu tenho o meu html padrão, e vou criar, como exemplo, um campo input. Nesse campo, é que usaremos a diretiva v-model-->
+    <input type="text" v-model="nome">  <!--E essa diretiva recebe  uma variável. Nesse caso, também como exemplo, vou colocar como nome-->
+    {{ nome }} <!---Sem o vmodel irá só haverá o input, mas quando adicionamos o vmodel e inserimos algo no input a string digitada irá aparecer na tela pois a interpolamos-->
+</div>                      <!---ESSA É A REATIVIDADE DO VUEJS-->
+
+<script>
+        var app = new Vue({
+            el: '#app2',
+            data: {
+                nome: '',
+            },
+        });
+</script>
+
+<!--DIRETIVA V-BIND
+A diretiva v-bind do vuejs que vai ser usada basicamente nos atributos das tags html, dando valores a ela.
+
+Nesse caso vamos passar por img,o vue ira reconhecer a diretiva v-bind e aplicar esse endereço no src que é a fonte da imagem. Tudo isso automaticamente.
+exemplo:
+-->
+
+<!--Então vamos ver na prática. Vou pegar,meu HTML padrão e criar uma tag img para inserir uma imagem, 
+Mas essa imagem vai ser inserida dinamicamente via a diretiva v-bind.--->
+<div id="app3">
+<!---Vamos então dá um bind no src. Para isso, a gente precisa usar o prefixo v- seguido de bind e mais símbolo : (dois pontos), apenas isso.
+E aí, então, esse v-bind:src recebe uma variáv-->
+    <img v-bind:src="myImage" alt="">
+<!--Eu defini o nome da variável como myImage.-->
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app3',
+        data: {
+            //Aqui é como se fosse o src de img do html porem no vue 
+            myImage: "https://cdn.pixabay.com/photo/2021/07/21/07/09/cygnet-6482420_960_720.jpg",
+            myImageAltText: 'Vue.js is awesome',
+        },
+    });
+</script>
+
+<!--Bom, em termos gerais, nós poderemos usar o v-bind em qualquer atributo html. Você também pode usar em atributos do HTML5
+ como por exemplo data-alguma-coisa Exemplos: data-user-id, data-validate, etc.-->
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+

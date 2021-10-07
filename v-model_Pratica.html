@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+<!---Temos um formulário html simples, e, em cada elemento desse formulário eu tenho a minha diretiva v-model.--->
+<!---Dentro do v-model eu tenho a minha variável, onde eu quero capturar o valor que vai ser digitado pelo usuário. 
+Ou seja, cada variável vai receber o valor que o usuário definir.-->   
+<div id="app">
+        <label for="">Nome</label><br>
+        <input type="text" v-model="nome">  
+    
+        <br><br>
+        <label for="">Telefone</label><br>
+        <input type="text" v-model="telefone">
+    
+        <br><br>
+        <label for="">Deseja receber nossas novidades?</label><br>
+        <input type="radio" value="sim" v-model="novidades"> Sim
+        <input type="radio" value="não" v-model="novidades"> Não
+ 
+<!--No campo interesses é necessário adicionar o "value" p funcionar, tendo em vista que o usuario ainda não digitou-->
+        <br><br>
+        <label for="">Interesses</label>   
+        <input type="text" type="checkbox" value="Futebol" v-model="interesses"> Futebol <br>
+        <input type="text" type="checkbox" value="Fórmula 1" v-model="interesses"> Formula 1 <br>
+        <input type="text" type="checkbox" value="Corrida" v-model="interesses"> Corrida <br>
+    
+        <br><br>
+        <label for="">Como nos conhece?</label>
+        <select v-model="comoNosConheceu">
+        <option value="">Escolha</option>
+        <option value="Google">Google</option>
+        <option value="TV">TV</option>
+        <option value="Revista">Revista</option>
+        </select>
+    
+        <br><br>
+    
+        <hr>
+    
+        Nome: {{ nome }} <br>
+        Telefone: {{ telefone }} <br>
+        Novidades: {{ novidades }} <br>
+        Interesses: {{ interesses }} <br>
+        Como nos conheceu? {{ comoNosConheceu }} <br>
+        </div>
+    
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    nome: '',
+                    telefone: '',
+                    novidades: '',
+//Por ser checkbox, a variável interesses precisa ser uma array, já que podemos ter múltiplas escolhas. Vamos então tirar de string e colocar como array
+                    interesses: [],
+                    comoNosConheceu: ''
+                },
+            });
+        </script>
+
+<!--PRECISAMOS PRESTAR BASTANTE ATENÇÃO NO CHECKBOX/RADIO BUTTON, P N ESQUECERMOS E O FORM N FUNCIONAR-->
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-bind em classes/style</title>
+</head>
+<body>
+
+    
+<!-- V-BIND: PASSANDO VALORES PARA CLASSES E ESTILO
+Uma necessidade comum de interligação de dados é manipular as classes dos elementos e seus estilos inline.
+No entanto, mexer com concatenação é irritante e propenso a erros. Por esta razão, Vue fornece aprimoramentos 
+especiais quando v-bind é usado com class e style. Além de Strings, as expressões também podem avaliar Objetos ou Arrays.
+-->
+
+
+<!--SINTAXE DO OBJETO
+Podemos passar um objeto para v-bind:class para alternar classes dinamicamente:
+-->
+<div v-bind:class="{ active: isActive }"></div>
+<!--A sintaxe acima significa que a presença da classe active será determinada pela veracidade do valor do dado isActive.-->
+
+<!--Você pode ter múltiplas classes alternadas por ter mais campos no objeto. Além disso, a diretiva v-bind:class também pode
+coexistir com um atributo de classe “normal”. Veja o exemplo:-->
+<div
+  class="static"
+  v-bind:class="{ active: isActive, 'text-danger': hasError }"
+>
+</div>
+<!--Com os seguintes dados:-->
+data: {
+    isActive: true,
+    hasError: false
+  }
+<!--Isso irá renderizar como:-->
+<div class="static active"></div>
+<!--Quando isActive ou hasError mudar, a lista de classes será atualizada correspondentemente. Por exemplo, se hasError é true, 
+a lista de classes será "static active text-danger".-->
+
+<!--OBS:O objeto vinculado não precisa estar diretamente no template, EXEMPLO:-->
+<div v-bind:class="classObject"></div>
+data: {
+    classObject: {
+      active: true,
+      'text-danger': false
+    }
+  }
+<!--Isto irá renderizar o mesmo resultado. Podemos também ligar a um dado computado que retorne um objeto. Esta é uma prática comum mas poderosa.-->
+<div v-bind:class="classObject"> </div>
+data: {
+    isActive: true,
+    error: null
+  },
+  computed: {
+    classObject: function () {
+      return {
+        active: this.isActive && !this.error,
+        'text-danger': this.error && this.error.type === 'fatal'
+      }
+    }
+  }
+
+
+  <!--SINTAXE DE ARRAY
+Podemos passar um array para V-bind:class para aplicar uma lista de classes:
+-->
+<div v-bind:class="[activeClass, errorClass]"></div>
+data: {
+    activeClass: 'active',
+    errorClass: 'text-danger'
+  }
+<!--Que renderizará: -->
+<div class="active text-danger"></div>
+
+<!------CURIOSIDADE----------->
+<!--Se prefirir também pode alternar entre uma classe na lista condicionalmente,
+usando uma expressão ternária -->
+<div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+<!--Isso sempre aplicará "errorClass", mas somente aplicará "activeClass" quando
+"isActive" for equivalente for verdadeiro -->
+
+<!--Porém isso pode ser um pouco prolixo se haver varias classes condicionais.
+Por isso também é possivel usar a sintaxe de objeto dentro da sintaxe Array-->
+<div v-bind:class="[{ active: isActive }, errorClass]"></div>
+
+
+<!--INTERLIGANDO ESTILOS INLINE
+A sintaxe de objeto para v-bind:style é bastante simples - parece quase CSS, mas em um objeto JavaScript.
+Você pode usar camelCase ou kebab-case para o nome da propriedade CSS.-->
+<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+data: {
+    activeColor: 'red',
+    fontSize: 30
+  }
+
+<!--DICA: Muitas vezes é uma boa ideia vincular um objeto diretamente no template para que fique mais limpo.-->
+<div v-bind:style="styleObject"></div>
+data: {
+    styleObject: {
+      color: 'red',
+      fontSize: '13px'
+    }
+  }
+
+</body>
+</html>
